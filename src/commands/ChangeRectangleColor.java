@@ -29,4 +29,8 @@ public class ChangeRectangleColor implements ICommand {
 		return storedRectangle;
 	}
 	
+	@Override
+	public String getStatus() {
+		return "Change Rectangle Color from " + oldColor + " to " + newColor;
+	}
 }

@@ -24,8 +24,13 @@ public class Main {
 			System.out.println("2 - Color the rectangle");
 			System.out.println("3 - Undo previous operation");
 			System.out.println("4 - Redo subsequent operation\n");
+			
+			if (commandHistory.hasItems()) {
+				System.out.println("HISTORIC");
+				commandHistory.getStatus();
+			}
 
-			System.out.println("Rectangle status:\n");
+			System.out.println("\nRectangle status:\n");
 			System.out.println("Rectangle color: " + rectangle.getCurrentColor());
 			System.out.println("Rectangle position: " + rectangle.getXAxis() + ", " + rectangle.getYAxis() + "\n");
 			
@@ -44,23 +49,23 @@ public class Main {
 				int tempX = Integer.parseInt(splittedUserInput[0].trim());
 				int tempY = Integer.parseInt(splittedUserInput[1].trim());
 				
+				commandHistory.add(new MoveRectangle(new Rectangle(rectangle), tempX, tempY));
+				
 				rectangle.setXAxis(tempX);
 				rectangle.setYAxis(tempY);
-				
-				commandHistory.add(new MoveRectangle(rectangle, tempX, tempY));
 				break;
 			case 2:
 				System.out.println("Please type in the new color of the rectangle: ");
 				String tempColor = scanner.nextLine();
+			
+				commandHistory.add(new ChangeRectangleColor(new Rectangle(rectangle), tempColor));
 				
 				rectangle.setCurrentColor(tempColor);
-				
-				commandHistory.add(new ChangeRectangleColor(rectangle, tempColor));
 				break;
 			case 3:
 				System.out.println("Un-doing...");
 				try {
-					commandHistory.moveBack();
+					rectangle = commandHistory.moveBack();
 				}
 				catch (Exception e) {
 					System.out.println("I can't move backwards! Sorry :(");
@@ -69,7 +74,7 @@ public class Main {
 			case 4:
 				System.out.println("Re-doing...");
 				try {
-					commandHistory.moveForward();
+					rectangle = commandHistory.moveForward();
 				}
 				catch (Exception e) {
 					System.out.println("I can't move forwards! Sorry :(");

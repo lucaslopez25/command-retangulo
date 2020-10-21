@@ -11,6 +11,12 @@ public class Rectangle {
 		xAxis = x;
 		yAxis = y;
 	}
+	
+	public Rectangle (Rectangle r) {
+		currentColor = r.getCurrentColor();
+		xAxis = r.getXAxis();
+		yAxis = r.getYAxis();
+	}
 
 	public String getCurrentColor() {
 		return currentColor;

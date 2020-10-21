@@ -33,5 +33,10 @@ public class MoveRectangle implements ICommand {
 		
 		return storedRectangle;
 	}
+	
+	@Override
+	public String getStatus() {
+		return "Move Rectangle from " + oldX + ", " + oldY + " to " + newX + ", " + newY;
+	}
 
 }
